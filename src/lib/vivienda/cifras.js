@@ -27,7 +27,7 @@ const clave = (tabla, g) => {
  */
 
 /** @returns {Record<string, Cifra>} */
-export function cifrasVivienda(serie, grupos, puntos) {
+export function cifrasVivienda(serie, grupos, puntos, mono = null) {
 	/** @type {Record<string, Cifra>} */
 	const c = {};
 	const poner = (nombre, cifra) => {
@@ -116,5 +116,46 @@ export function cifrasVivienda(serie, grupos, puntos) {
 		neutro(`izq_jovenes_${clave(SEXO, s)}`, v, `${s}, 18 a 34 años: se sitúan entre 1 y 4 en la escala ideológica`);
 	}
 
+	if (mono) cifrasMonografico(mono, { pct, otra });
 	return c;
+}
+
+// Monográfico de vivienda (CIS 3532, junio de 2026). Todas sus cifras empiezan por m_.
+// «Le perjudica» y las situaciones vividas salen en azul (como el problema personal), «le preocupa» en teja
+// (como el problema de España) y el resto sin color.
+const TIPO_MONO = { preocupa: 'esp', perjudica: 'per' };
+const EDAD_MONO = { '18-24': '18_24', '25-34': '25_34', '35-44': '35_44', '45-54': '45_54', '55-64': '55_64', '65 y más': '65_mas', '18-34': '18_34' };
+
+function cifrasMonografico(m, { pct, otra }) {
+	const M = m.meta;
+	const campo = `del ${Number(M.campo.desde.slice(8))} al ${Number(M.campo.hasta.slice(8))} de ${mes(M.mes)}`;
+	otra('m_entrevistas', entero(M.entrevistas), 'Monográfico: entrevistas');
+	otra('m_campo', campo, 'Monográfico: fechas de las entrevistas');
+	otra('m_mes', mes(M.mes), 'Monográfico: mes de las entrevistas');
+	otra('m_publicacion', `${Number(M.publicacion.slice(8))} de ${mes(M.publicacion.slice(0, 7))}`, 'Monográfico: fecha de publicación del avance de resultados');
+
+	const grupos = (base, tipo, d, nota) => {
+		pct(base, tipo, d.total, `${nota}, total`);
+		for (const g of [...d.edad, ...d.edad2]) {
+			if (g.g === '65 y más' && d.edad2.includes(g)) continue; // ya está en edad
+			if (g.v != null) pct(`${base}_${clave(EDAD_MONO, g.g)}`, tipo, g, `${nota}, ${g.g} años`);
+		}
+		if (d.grandes_ciudades) pct(`${base}_ciudades`, tipo, d.grandes_ciudades, `${nota}, 36 grandes ciudades`);
+	};
+
+	for (const [id, d] of Object.entries(m.indicadores)) {
+		const tipo = TIPO_MONO[id] ?? 'pct';
+		grupos(`m_${id}`, tipo, d, `Monográfico: ${d.que.toLowerCase()}`);
+		for (const g of d.ideologia) if (g.v != null) pct(`m_${id}_${clave(IDEO, g.g)}`, tipo, g, `Monográfico: ${d.que.toLowerCase()}, ${g.g}`);
+	}
+	for (const s of m.situaciones) grupos(`m_${s.id}`, 'per', s, `Monográfico, últimos cinco años: ${s.corto.toLowerCase()}`);
+	for (const x of m.medidas) {
+		const signo = (v) => `${Math.round(v) > 0 ? '+' : Math.round(v) < 0 ? '−' : ''}${decimal(Math.abs(v), 0)}`;
+		pct(`m_${x.id}_favor`, 'pct', x.favor, `Monográfico: a favor de «${x.corto.toLowerCase()}»`);
+		pct(`m_${x.id}_contra`, 'pct', x.contra, `Monográfico: en contra de «${x.corto.toLowerCase()}»`);
+		otra(`m_${x.id}_neto`, signo(x.neto), `Monográfico: saldo (a favor menos en contra) de «${x.corto.toLowerCase()}», en puntos, sin decimales`);
+		for (const g of x.ideologia) {
+			if (g.neto != null) otra(`m_${x.id}_neto_${clave(IDEO, g.g)}`, signo(g.neto), `Monográfico: apoyo neto a «${x.corto.toLowerCase()}», ${g.g}`);
+		}
+	}
 }

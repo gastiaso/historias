@@ -7,8 +7,10 @@
 	import Nube from './Nube.svelte';
 	import Serie from './Serie.svelte';
 	import Grupos from './Grupos.svelte';
+	import Medidas from './Medidas.svelte';
+	import { DEL_MONOGRAFICO } from './estados.js';
 
-	let { estado, progreso, primero, enPortada, movil, serie, grupos, rotulos } = $props();
+	let { estado, progreso, primero, enPortada, movil, serie, grupos, mono, rotulos } = $props();
 
 	let w = $state(375);
 	let h = $state(740);
@@ -27,11 +29,17 @@
 		'espana-personal': 'serie',
 		octubre: 'serie',
 		cierre: 'serie',
+		junio: 'serie',
 		edad: 'grupos',
 		ideologia: 'grupos',
-		sexo: 'grupos'
+		sexo: 'grupos',
+		brecha: 'grupos',
+		situaciones: 'grupos',
+		intervencion: 'grupos',
+		medidas: 'medidas'
 	};
 	const capa = $derived(CAPA[estado]);
+	const fuente = $derived(DEL_MONOGRAFICO.includes(estado) ? rotulos.fuente_monografico : rotulos.fuente);
 
 	// La línea se dibuja con el scroll solo la primera vez que aparece, y sin animación si así se ha pedido.
 	const revelado = $derived(
@@ -42,9 +50,12 @@
 <div class="grafico" bind:clientWidth={w} bind:clientHeight={h}>
 	<Nube {w} {h} {zona} {fs} meses={serie.meses} rotulo={rotulos.nube}
 		visible={capa === 'nube'} color={estado === 'nube-vivienda'} etiquetas={!enPortada} />
-	<Serie {w} {h} {zona} {fs} {estado} {revelado} {serie} {rotulos} visible={capa === 'serie'} />
-	<Grupos {w} {h} {zona} {fs} {estado} {grupos} {rotulos} visible={capa === 'grupos'} />
-	<p class="fuente" class:oculta={enPortada} style="top: {zona.bottom + fs * 5 + 24}px">{rotulos.fuente}</p>
+	<Serie {w} {h} {zona} {fs} {estado} {revelado} {serie} {rotulos} mesLupa={mono.meta.mes} visible={capa === 'serie'} />
+	<Grupos {w} {h} {zona} {fs} {estado} {grupos} {mono} {rotulos} visible={capa === 'grupos'} />
+	<Medidas {w} {h} {zona} {fs} medidas={mono.medidas} {rotulos} visible={capa === 'medidas'} />
+	{#key fuente}
+		<p class="fuente" class:oculta={enPortada} style="top: {zona.bottom + fs * 5 + 24}px">{fuente}</p>
+	{/key}
 </div>
 
 <style>

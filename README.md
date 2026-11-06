@@ -35,6 +35,14 @@ Las cifras se calculan de antemano con `datos/preparar_vivienda.py` (pandas y py
 python datos/preparar_vivienda.py RUTA/barometros_armonizados.parquet
 ```
 
+La profundidad sale del monográfico de vivienda del CIS (estudio 3532, *Barómetro de Vivienda 2026*, junio de 2026). Mientras no haya microdatos, se usan las tabulaciones públicas del avance de resultados (el Excel `3532-multi_A.xlsx`, y opcionalmente `3532-multi01_A.xlsx` para las grandes ciudades). El script, en R (readxl y jsonlite), escribe `static/datos/vivienda/monografico.json`:
+
+```
+Rscript datos/preparar_monografico.R RUTA/3532-multi_A.xlsx RUTA/3532-multi01_A.xlsx
+```
+
+Reconstruye los conteos ponderados con la base de cada columna, así que agrupar edades o tramos de ideología es exacto. Los márgenes son aproximados: sin microdatos, el efecto de diseño se estima a partir de la sobremuestra urbana (el método está al principio del script).
+
 ## Construir
 
 `npm run build` genera el sitio estático en `build/`. Si el guion cita una cifra que no existe, la construcción se detiene con el mismo mensaje.

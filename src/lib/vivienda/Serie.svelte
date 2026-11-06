@@ -10,7 +10,7 @@
 	import { porcentaje } from '$lib/formato.js';
 	import { mesCorto, numeroMes, partir } from '$lib/graficos/comun.js';
 
-	let { w, h, zona, estado, revelado, serie, rotulos, visible, fs } = $props();
+	let { w, h, zona, estado, revelado, serie, rotulos, visible, fs, mesLupa } = $props();
 
 	const uid = $props.id();
 	const año0 = $derived(Number(serie.meses[0].slice(0, 4)));
@@ -21,11 +21,12 @@
 	const domOctubre = $derived([ult - 15.5, ult + 0.5]);
 
 	const dom = new Tween(untrack(() => domTodo), { duration: 800, easing: cubicInOut });
+	const ampliado = $derived(estado === 'octubre' || estado === 'junio');
 	$effect(() => {
-		dom.set(estado === 'octubre' ? domOctubre : domTodo, { duration: prefersReducedMotion.current ? 0 : 800 });
+		dom.set(ampliado ? domOctubre : domTodo, { duration: prefersReducedMotion.current ? 0 : 800 });
 	});
 
-	const conPer = $derived(estado === 'espana-personal' || estado === 'cierre');
+	const conPer = $derived(estado === 'espana-personal' || estado === 'cierre' || estado === 'junio');
 	const rev = $derived(estado === 'linea' ? revelado : 1);
 	const car = $derived(fs * 0.56); // ancho aproximado de un carácter
 
@@ -116,8 +117,16 @@
 		<text class="r" x={k.x} y={e.b + fs + 6} text-anchor="middle" font-size={fs}>{k.t}</text>
 	{/each}
 
+	<!-- Junio de 2026: el mes del monográfico -->
+	<g class="cambia" class:oculta={estado !== 'junio'}>
+		<rect class="lupa" x={e.x(nm(mesLupa) - 0.5)} y={e.t - 6} width={Math.max(0, e.x(nm(mesLupa) + 0.5) - e.x(nm(mesLupa) - 0.5))} height={e.b - e.t + 6} />
+		{#each partir(rotulos.junio, 18) as l, i}
+			<text class="r fuerte" x={e.x(nm(mesLupa)) - (e.x(nm(mesLupa) + 0.5) - e.x(nm(mesLupa))) - 4} y={e.t + fs * 0.4 + i * (fs + 3)} text-anchor="end" font-size={fs}>{l}</text>
+		{/each}
+	</g>
+
 	<!-- R10: la línea siempre; el rótulo, a su izquierda, donde la serie va baja -->
-	<g class="cambia" class:oculta={estado === 'octubre'}>
+	<g class="cambia" class:oculta={ampliado}>
 		<line class="ruptura" x1={xr} x2={xr} y1={e.t - 6} y2={e.b} />
 		{#each partir(rotulos.r10, Math.max(10, Math.floor((xr - e.l - 8) / car))) as l, i}
 			<text class="r" x={xr - 5} y={e.t + fs * 0.4 + i * (fs + 3)} text-anchor="end" font-size={fs}>{l}</text>
@@ -235,5 +244,10 @@
 
 	.cruce {
 		stroke: var(--tinta-3);
+	}
+
+	.lupa {
+		fill: var(--raya);
+		opacity: 0.7;
 	}
 </style>

@@ -33,7 +33,7 @@
 
 	{#snippet grafico({ estado, progreso, primero, enPortada, movil })}
 		<Grafico {estado} {progreso} {primero} {enPortada} {movil}
-			serie={data.serie} grupos={data.grupos} rotulos={guion.rotulos} />
+			serie={data.serie} grupos={data.grupos} mono={data.mono} rotulos={guion.rotulos} />
 	{/snippet}
 </Historia>
 

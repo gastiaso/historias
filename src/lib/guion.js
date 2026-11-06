@@ -74,8 +74,12 @@ function rellenar(texto, cifras, donde, html = true) {
 
 /** Porcentajes escritos a mano (fuera de las llaves): se avisa, no se impide. */
 function aMano(texto, donde) {
-	// «al 95 %» es el nivel de confianza del margen, no un dato.
-	const limpio = texto.replace(/\{[^{}\n]*\}/g, '').replace(/al 95\s?%/g, '');
+	// «al 95 %» es el nivel de confianza del margen, no un dato; las direcciones de los enlaces tampoco cuentan.
+	const limpio = texto
+		.replace(/\{[^{}\n]*\}/g, '')
+		.replace(/\]\([^)]*\)/g, ']')
+		.replace(/https?:\/\/\S+/g, '')
+		.replace(/al 95\s?%/g, '');
 	return [...limpio.matchAll(/\d+(?:[.,]\d+)?\s?%/g)].map((m) => `${donde}: «${m[0]}» parece un porcentaje escrito a mano.`);
 }
 

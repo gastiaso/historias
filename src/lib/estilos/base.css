@@ -16,6 +16,7 @@
 	--nube: rgba(120, 106, 88, 0.34);
 	--banda-teja: rgba(179, 64, 31, 0.16);
 	--banda-azul: rgba(45, 93, 123, 0.16);
+	--contra: #c4b9a6;
 	--sombra: 0 10px 26px -14px rgba(70, 45, 20, 0.35);
 
 	--f-texto: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
@@ -40,6 +41,7 @@
 		--nube: rgba(190, 178, 160, 0.28);
 		--banda-teja: rgba(224, 113, 74, 0.2);
 		--banda-azul: rgba(127, 176, 208, 0.2);
+		--contra: #5a5044;
 		--sombra: 0 10px 26px -14px rgba(0, 0, 0, 0.6);
 		color-scheme: dark;
 	}
