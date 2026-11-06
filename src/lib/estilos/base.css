@@ -1,0 +1,207 @@
+/* Historias con los barómetros del CIS · estilo «Papel».
+   Papel cálido, tinta y una serif de lectura. El color se reserva para la vivienda: teja para el problema
+   de España y azul tinta para el problema personal. Nunca identifica grupos (edad, ideología, sexo): esos van
+   por posición y rótulo. España y personal se distinguen también sin color (punto lleno y anillo, línea
+   continua y discontinua). Variante oscura según la preferencia del sistema. */
+
+:root {
+	--papel: #f3eee4;
+	--papel-claro: #fbf8f1;
+	--tinta: #1d1a16;
+	--tinta-2: #5b544b;
+	--tinta-3: #6e665b;
+	--raya: #d8cfbf;
+	--teja: #b3401f;
+	--azul: #2d5d7b;
+	--nube: rgba(120, 106, 88, 0.34);
+	--banda-teja: rgba(179, 64, 31, 0.16);
+	--banda-azul: rgba(45, 93, 123, 0.16);
+	--sombra: 0 10px 26px -14px rgba(70, 45, 20, 0.35);
+
+	--f-texto: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
+	--f-rotulo: 'Public Sans Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+	--columna: 38rem;
+	--margen: 16px;
+
+	color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--papel: #171410;
+		--papel-claro: #211d18;
+		--tinta: #ece5d8;
+		--tinta-2: #bdb3a3;
+		--tinta-3: #988e7f;
+		--raya: #3a332a;
+		--teja: #e0714a;
+		--azul: #7fb0d0;
+		--nube: rgba(190, 178, 160, 0.28);
+		--banda-teja: rgba(224, 113, 74, 0.2);
+		--banda-azul: rgba(127, 176, 208, 0.2);
+		--sombra: 0 10px 26px -14px rgba(0, 0, 0, 0.6);
+		color-scheme: dark;
+	}
+}
+
+@media (min-width: 40rem) {
+	:root {
+		--margen: 24px;
+	}
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	background: var(--papel);
+	color: var(--tinta);
+	font-family: var(--f-texto);
+	font-size: 1.125rem;
+	line-height: 1.5;
+	font-optical-sizing: auto;
+}
+
+h1,
+h2,
+h3 {
+	margin: 0;
+	font-weight: 500;
+	line-height: 1.1;
+	letter-spacing: -0.01em;
+	text-wrap: balance;
+}
+
+p {
+	margin: 0 0 1em;
+	text-wrap: pretty;
+}
+
+a {
+	color: inherit;
+	text-decoration-line: underline;
+	text-decoration-color: var(--teja);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.18em;
+}
+
+a:hover {
+	color: var(--teja);
+}
+
+:focus-visible {
+	outline: 2px solid var(--teja);
+	outline-offset: 2px;
+}
+
+::selection {
+	background: var(--banda-teja);
+}
+
+/* Rótulos: mayúsculas pequeñas y espaciadas en Public Sans. */
+.rotulo {
+	font-family: var(--f-rotulo);
+	font-size: 0.6875rem;
+	font-weight: 600;
+	line-height: 1.3;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--tinta-3);
+}
+
+.columna {
+	max-width: calc(var(--columna) + 2 * var(--margen));
+	margin-inline: auto;
+	padding-inline: var(--margen);
+}
+
+/* Tarjeta de texto: la que sube por encima del gráfico en las historias. */
+.tarjeta {
+	background: var(--papel-claro);
+	border: 1px solid var(--raya);
+	box-shadow: var(--sombra);
+	padding: 14px 16px 15px;
+	font-size: 1.0625rem;
+	line-height: 1.42;
+}
+
+.tarjeta > :last-child {
+	margin-bottom: 0;
+}
+
+/* Cifras en el texto, con el color de su medida. */
+.espana {
+	color: var(--teja);
+	font-weight: 700;
+}
+
+.personal {
+	color: var(--azul);
+	font-weight: 700;
+}
+
+.num {
+	font-variant-numeric: tabular-nums;
+}
+
+/* Cifra con margen de error: subrayado de puntos; el margen sale en un globo (src/lib/motor/margenes.js). */
+.cifra[data-margen] {
+	text-decoration: underline dotted 1px;
+	text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
+	text-underline-offset: 0.2em;
+	cursor: help;
+}
+
+.cifra[data-margen]:focus-visible {
+	outline-offset: 1px;
+}
+
+.globo-margen {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 50;
+	max-width: 16rem;
+	padding: 5px 8px;
+	background: var(--tinta);
+	color: var(--papel);
+	font: 500 0.75rem/1.35 var(--f-rotulo);
+	pointer-events: none;
+}
+
+/* Rótulos dentro de los gráficos (SVG). */
+.r {
+	font-family: var(--f-rotulo);
+	fill: var(--tinta-3);
+	stroke: var(--papel);
+	stroke-width: 3px;
+	stroke-linejoin: round;
+	paint-order: stroke;
+}
+
+.r.fuerte {
+	fill: var(--tinta);
+	font-weight: 600;
+}
+
+/* Sin animación para quien la ha desactivado: se salta directamente de un estado a otro. */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
