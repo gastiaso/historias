@@ -28,6 +28,7 @@ export function cargarVivienda() {
 		const guion = leerGuion(fuente, cifras, ESTADOS, ROTULOS);
 		lista(guion, 'situaciones', mono.situaciones.map((s) => s.id));
 		lista(guion, 'cruces', mono.cruces.map((c) => c.id));
+		lista(guion, 'cohortes', [...mono.situaciones[0].edad.map((g) => g.g), '18-34', 'total']);
 		const E = serie.edicion;
 		return { cifras, guion, serie, grupos, mono, lineaEdicion: `Datos de ${mes(E.desde)} a ${mes(E.hasta)}` };
 	} catch (e) {

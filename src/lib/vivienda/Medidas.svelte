@@ -6,7 +6,7 @@
 	Sin color de vivienda: no es ni el problema de España ni el personal.
 -->
 <script>
-	import { decimal } from '$lib/formato.js';
+	import { decimal, entero, porcentaje } from '$lib/formato.js';
 
 	let { w, h, zona, medidas, rotulos, visible, fs, onelegir } = $props();
 
@@ -27,6 +27,10 @@
 	const alto = $derived((e.b - e.t) / filas.length);
 	const grosor = $derived(Math.max(6, Math.min(12, alto * 0.32)));
 
+	const conMargen = (d) => `${porcentaje(d.v)} (${decimal(d.lo)}–${porcentaje(d.hi)})`;
+	const globo = (f) =>
+		[f.corto, `${rotulos.favor}: ${conMargen(f.favor)}`, `${rotulos.contra}: ${conMargen(f.contra)}`, `${entero(f.favor.n)} entrevistas`].join('\n');
+
 	function tecla(ev, id) {
 		if (ev.key === 'Enter' || ev.key === ' ') {
 			ev.preventDefault();
@@ -46,7 +50,7 @@
 
 	{#each filas as f, i (f.id)}
 		{@const y = e.t + (i + 0.62) * alto}
-		<g class="fila" role="button" tabindex={visible ? 0 : -1} aria-label="{f.corto}: {rotulos.desglose.toLowerCase()}"
+		<g class="fila" role="button" tabindex={visible ? 0 : -1} aria-label="{f.corto}: {rotulos.desglose.toLowerCase()}" data-globo={globo(f)}
 			onclick={() => onelegir(f.id)} onkeydown={(ev) => tecla(ev, f.id)}>
 			<rect class="zona-toque" x={zona.left - 6} y={e.t + i * alto} width={zona.right - zona.left + 12} height={alto} />
 			<text class="r" x={e.l} y={y - grosor / 2 - 4} font-size={fs * 1.05} aria-hidden="true">{f.corto}</text>

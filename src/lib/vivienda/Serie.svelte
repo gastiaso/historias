@@ -7,7 +7,7 @@
 	import { untrack } from 'svelte';
 	import { Tween, prefersReducedMotion } from 'svelte/motion';
 	import { cubicInOut } from 'svelte/easing';
-	import { porcentaje } from '$lib/formato.js';
+	import { decimal, entero, mes, porcentaje } from '$lib/formato.js';
 	import { mesCorto, numeroMes, partir } from '$lib/graficos/comun.js';
 
 	let { w, h, zona, estado, revelado, serie, rotulos, visible, fs, mesLupa } = $props();
@@ -88,6 +88,27 @@
 	const prev = $derived({ x: e.x(nm(T.anterior.mes)), y: e.y(T.anterior.esp.v) });
 	const anchoEspana = $derived(rotulos.espana.length * car + 30);
 	const pie = $derived(e.b + fs * 2 + 14);
+
+	// Globo de cada mes: sus dos medidas con su margen y las entrevistas de ese barómetro.
+	function globoMes(i) {
+		const linea = (nombre, d) =>
+			d.v[i] == null ? null : `${nombre}: ${porcentaje(d.v[i])} (${decimal(d.lo[i])}–${porcentaje(d.hi[i])})`;
+		const m = mes(serie.meses[i]);
+		return [
+			m[0].toUpperCase() + m.slice(1),
+			linea(rotulos.espana, serie.esp),
+			conPer ? linea(rotulos.personal, serie.per) : null,
+			`${entero(serie.n[i])} entrevistas en ese barómetro`
+		].filter(Boolean).join('\n');
+	}
+	// Columna de cada mes: de la mitad del hueco con el anterior a la mitad del hueco con el siguiente.
+	const columnas = $derived(
+		xs.map((m, i) => {
+			const a = i ? (e.x(xs[i - 1]) + e.x(m)) / 2 : e.x(m) - (e.x(xs[1]) - e.x(xs[0])) / 2;
+			const b = i < xs.length - 1 ? (e.x(m) + e.x(xs[i + 1])) / 2 : e.x(m) + (e.x(m) - e.x(xs[i - 1])) / 2;
+			return { a, b };
+		})
+	);
 </script>
 
 <svg class="capa" class:oculta={!visible} width={w} height={h} aria-hidden="true">
@@ -139,6 +160,9 @@
 			<path class="banda esp" d={banda(serie.esp.lo, serie.esp.hi)} />
 			<path class="linea per cambia" class:oculta={!conPer} d={trazo(serie.per.v)} />
 			<path class="linea esp" d={trazo(serie.esp.v)} />
+			{#each columnas as col, i}
+				<rect class="columna" x={col.a} y={e.t - 6} width={Math.max(0, col.b - col.a)} height={e.b - e.t + 6} data-globo={globoMes(i)} />
+			{/each}
 		</g>
 		{#each avisos as a}
 			<circle class="aviso cambia" class:oculta={e.x(a.m) > e.l + (e.r - e.l) * rev} cx={e.x(a.m)} cy={e.y(a.v)} r={fs * 0.4} />
@@ -191,6 +215,16 @@
 
 	.oculta {
 		opacity: 0;
+		pointer-events: none;
+	}
+
+	.columna {
+		fill: var(--raya);
+		fill-opacity: 0;
+	}
+
+	.columna:hover {
+		fill-opacity: 0.4;
 	}
 
 	.rejilla {

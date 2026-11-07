@@ -13,7 +13,7 @@
 
 	const ancha = new MediaQuery('min-width: 900px', false);
 	/** @type {HTMLElement[]} */
-	const nodos = [];
+	const nodos = $state([]);
 	let activo = $state(-1);
 	let progreso = $state(0);
 

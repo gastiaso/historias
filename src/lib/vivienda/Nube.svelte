@@ -83,28 +83,29 @@
 		const teja = css.getPropertyValue('--teja');
 		const r = w < 640 ? 0.95 : 1.25;
 		const esp = puntos.esp;
-		const camino = (citan) => {
+		// Se pinta por tandas: un solo trazado con 20.000 círculos falla en silencio en algunos motores
+		// (Firefox con aceleración gráfica en Windows).
+		const TANDA = 400;
+		const pintar = (citan, color, alfa) => {
 			const ri = citan ? r * (1 + 0.25 * t) : r;
+			c.fillStyle = color;
+			c.globalAlpha = alfa;
+			let k = 0;
 			c.beginPath();
 			for (let i = 0; i < pos.n; i++) {
 				if (!!esp[i] !== citan) continue;
 				c.moveTo(pos.x[i] + ri, pos.y[i]);
 				c.arc(pos.x[i], pos.y[i], ri, 0, 6.2832);
+				if (++k % TANDA === 0) {
+					c.fill();
+					c.beginPath();
+				}
 			}
+			c.fill();
 		};
-		c.fillStyle = gris;
-		camino(false);
-		c.fill();
-		camino(true);
-		if (t < 1) {
-			c.globalAlpha = 1 - t;
-			c.fill();
-		}
-		if (t > 0) {
-			c.globalAlpha = t;
-			c.fillStyle = teja;
-			c.fill();
-		}
+		pintar(false, gris, 1);
+		if (t < 1) pintar(true, gris, 1 - t);
+		if (t > 0) pintar(true, teja, t);
 		c.globalAlpha = 1;
 	});
 </script>
