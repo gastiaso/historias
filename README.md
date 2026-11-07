@@ -42,6 +42,8 @@ En noviembre de 2023, el 5,6 % de los entrevistados citaba la vivienda entre los
 | [`puntos.json`](https://gastiaso.github.io/historias/datos/vivienda/puntos.json) | La muestra de la nube: 320 entrevistas por barómetro, sin ponderar, elegidas con semilla fija |
 | [`monografico.json`](https://gastiaso.github.io/historias/datos/vivienda/monografico.json) | *Barómetro de Vivienda 2026*: siete indicadores, 18 situaciones vividas y diez medidas, por los nueve cruces del CIS |
 
+Se pueden descargar y reutilizar con licencia [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.es), citando la autoría y, siempre, la fuente original (CIS).
+
 **Cómo se mide en los barómetros.** Porcentaje de entrevistados que citan la vivienda entre sus hasta tres menciones, con el peso del CIS. La base es quien da una primera mención (también NS/NC); el margen es el intervalo de Wilson al 95 % sobre el tamaño efectivo. Es el mismo método que *Barómetro a barómetro*, y coincide con lo publicado por el CIS (por ejemplo, el 55,7 % de octubre de 2026).
 
 **Cómo se mide en el monográfico.** Sin microdatos publicados, los conteos ponderados se reconstruyen a partir de las tabulaciones del avance (porcentaje por base de cada columna), así que agrupar edades o tramos de ideología es exacto. El efecto de diseño se estima a partir de la sobremuestra urbana (1,347; el método está al principio de [`preparar_monografico.R`](datos/preparar_monografico.R)).
@@ -130,7 +132,7 @@ Las conclusiones son provisionales y se revisan a medida que hay más datos.
 
 ## Cómo citar
 
-> Astiaso Llamazares, G. (2026). *Cómo la vivienda se convirtió en el primer problema de España*. Historias con los barómetros del CIS. https://gastiaso.github.io/historias/vivienda/. Origen de los datos: Centro de Investigaciones Sociológicas (CIS), barómetros mensuales (edición `v2026-10` de *Barómetro a barómetro*) y *Barómetro de Vivienda 2026* (estudio 3532, avance de resultados).
+> Astiaso Llamazares, G. (2026). *Cómo la vivienda se convirtió en el primer problema de España*. Historias con los barómetros del CIS. https://gastiaso.github.io/historias/vivienda/. CC BY 4.0. Origen de los datos: Centro de Investigaciones Sociológicas (CIS), barómetros mensuales (edición `v2026-10` de *Barómetro a barómetro*) y *Barómetro de Vivienda 2026* (estudio 3532, avance de resultados).
 
 Añade la fecha de consulta.
 
@@ -142,9 +144,12 @@ Los datos se reutilizan según las [condiciones generales del CIS](https://www.c
 
 ## Licencias
 
-- **Código:** [MIT](LICENSE).
-- **Fuentes:** Newsreader y Public Sans, con licencia SIL Open Font License 1.1, servidas desde el propio sitio.
+- **Código:** [MIT](LICENSE). Se puede reutilizar con cualquier fin conservando el aviso de autoría.
+- **Textos de las historias, gráficos, imágenes y datos preparados:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.es). Se pueden reutilizar con cualquier fin citando la autoría.
 - **Datos originales del CIS:** condiciones de reutilización del CIS.
+- **Fuentes:** Newsreader y Public Sans, con licencia SIL Open Font License 1.1, servidas desde el propio sitio.
+
+Detalle y fórmula de cita en [`LICENCIA-DATOS.md`](LICENCIA-DATOS.md).
 
 ## Relacionado
 
