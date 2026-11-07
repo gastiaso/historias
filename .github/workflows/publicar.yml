@@ -1,0 +1,71 @@
+# Construye el sitio y lo publica en GitHub Pages (https://gastiaso.github.io/historias/).
+# Se ejecuta con cada cambio en main y a mano (Actions > Publicar > Run workflow). En las pull requests
+# comprueba y construye el sitio, pero no lo publica: el resultado aparece en la propia pull request.
+#
+# Los datos no se recalculan aquí: cada historia se ancla a una edición de los datos y sus JSON van en el
+# repositorio (static/datos/), generados en local con los scripts de datos/.
+name: Publicar
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.ref) || 'pages' }}
+  cancel-in-progress: false
+
+jobs:
+  construir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      # Comprueba el código y lee el guion: una cifra o un rótulo que no existen paran aquí la construcción.
+      - name: Comprobar
+        run: npm run check
+
+      - name: Construir
+        run: npm run build
+
+      - name: Comprobar que están las páginas y los datos
+        run: |
+          for f in build/index.html build/vivienda/index.html build/datos/vivienda/serie.json \
+                   build/datos/vivienda/puntos.json build/datos/vivienda/monografico.json \
+                   build/compartir/sitio.png build/compartir/vivienda.png; do
+            test -s "$f" || { echo "Falta $f"; exit 1; }
+          done
+          if grep -q "Cifras disponibles para el guion" build/vivienda/index.html; then
+            echo "La ayuda para escribir el guion no debe publicarse"; exit 1
+          fi
+
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        with:
+          path: build
+
+  desplegar:
+    needs: construir
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

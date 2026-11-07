@@ -1,0 +1,125 @@
+<!--
+	Apoyo a diez medidas de vivienda (monográfico, P24): en contra hacia la izquierda, a favor hacia la derecha,
+	ordenadas por el saldo (a favor menos en contra), que va en la última columna. Se usa el saldo porque en
+	estas baterías mucha gente tiende a decir que sí a todo (aquiescencia).
+	Cada fila es un botón: abre el desglose de esa medida por grupos (Desglose.svelte).
+	Sin color de vivienda: no es ni el problema de España ni el personal.
+-->
+<script>
+	import { decimal } from '$lib/formato.js';
+
+	let { w, h, zona, medidas, rotulos, visible, fs, onelegir } = $props();
+
+	const filas = $derived([...medidas].sort((a, b) => b.neto - a.neto));
+	const signo = (v) => `${Math.round(v) > 0 ? '+' : Math.round(v) < 0 ? '−' : ''}${decimal(Math.abs(v), 0)}`;
+
+	const e = $derived.by(() => {
+		const colSaldo = fs * 3.2;
+		const l = zona.left;
+		const r = zona.right - colSaldo;
+		const t = zona.top + fs * 2.4;
+		const b = zona.bottom - fs * 1.8;
+		// El centro deja sitio a la izquierda para el «en contra» más largo.
+		const maxContra = Math.max(...filas.map((f) => f.contra.v));
+		const k = (r - l) / (100 + maxContra);
+		return { l, r, t, b, c: l + maxContra * k, k, saldo: zona.right };
+	});
+	const alto = $derived((e.b - e.t) / filas.length);
+	const grosor = $derived(Math.max(6, Math.min(12, alto * 0.32)));
+
+	function tecla(ev, id) {
+		if (ev.key === 'Enter' || ev.key === ' ') {
+			ev.preventDefault();
+			onelegir(id);
+		}
+	}
+</script>
+
+<svg class="capa" class:oculta={!visible} width={w} height={h} role="group" aria-label={rotulos.desglose_pista} aria-hidden={!visible}>
+	<g aria-hidden="true">
+		<rect class="contra" x={e.c - fs * 0.9} y={zona.top - fs * 0.45} width={fs * 0.8} height={fs * 0.8} />
+		<text class="r fuerte" x={e.c - fs * 1.3} y={zona.top + fs * 0.35} text-anchor="end" font-size={fs}>{rotulos.contra}</text>
+		<rect class="favor" x={e.c + fs * 0.1} y={zona.top - fs * 0.45} width={fs * 0.8} height={fs * 0.8} />
+		<text class="r fuerte" x={e.c + fs * 1.3} y={zona.top + fs * 0.35} font-size={fs}>{rotulos.favor}</text>
+		<text class="r fuerte" x={e.saldo} y={zona.top + fs * 0.35} text-anchor="end" font-size={fs}>{rotulos.saldo}</text>
+	</g>
+
+	{#each filas as f, i (f.id)}
+		{@const y = e.t + (i + 0.62) * alto}
+		<g class="fila" role="button" tabindex={visible ? 0 : -1} aria-label="{f.corto}: {rotulos.desglose.toLowerCase()}"
+			onclick={() => onelegir(f.id)} onkeydown={(ev) => tecla(ev, f.id)}>
+			<rect class="zona-toque" x={zona.left - 6} y={e.t + i * alto} width={zona.right - zona.left + 12} height={alto} />
+			<text class="r" x={e.l} y={y - grosor / 2 - 4} font-size={fs * 1.05} aria-hidden="true">{f.corto}</text>
+			<line class="centro" x1={e.c} x2={e.c} y1={y - grosor / 2 - 2} y2={y + grosor / 2 + 2} />
+			<rect class="barra contra" class:quieta={!visible} x={e.c - f.contra.v * e.k} y={y - grosor / 2} width={f.contra.v * e.k} height={grosor}
+				style="transform-origin: {e.c}px {y}px" />
+			<rect class="barra favor" class:quieta={!visible} x={e.c} y={y - grosor / 2} width={f.favor.v * e.k} height={grosor}
+				style="transform-origin: {e.c}px {y}px" />
+			<text class="r fuerte" x={e.saldo} y={y + fs * 0.35} text-anchor="end" font-size={fs * 1.05} aria-hidden="true">{signo(f.neto)}</text>
+		</g>
+	{/each}
+
+	<text class="r pista" x={e.l} y={e.b + fs * 1.6} font-size={fs} aria-hidden="true">{rotulos.desglose_pista} →</text>
+</svg>
+
+<style>
+	.capa {
+		position: absolute;
+		inset: 0;
+		transition: opacity 0.6s;
+	}
+
+	.oculta {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.fila {
+		cursor: pointer;
+		outline: none;
+	}
+
+	.zona-toque {
+		fill: var(--raya);
+		opacity: 0;
+		transition: opacity 0.2s;
+	}
+
+	.fila:hover .zona-toque,
+	.fila:focus-visible .zona-toque {
+		opacity: 0.45;
+	}
+
+	.fila:focus-visible .zona-toque {
+		stroke: var(--teja);
+		stroke-width: 2px;
+		opacity: 1;
+		fill-opacity: 0.45;
+	}
+
+	.centro {
+		stroke: var(--tinta-3);
+	}
+
+	.barra {
+		transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+	}
+
+	/* Mientras no se ve, las barras esperan plegadas en el centro; al aparecer, crecen. */
+	.barra.quieta {
+		transform: scaleX(0);
+	}
+
+	.favor {
+		fill: var(--tinta-2);
+	}
+
+	.contra {
+		fill: var(--contra);
+	}
+
+	.pista {
+		fill: var(--teja);
+		font-weight: 600;
+	}
+</style>

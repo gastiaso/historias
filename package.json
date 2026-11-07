@@ -1,0 +1,25 @@
+{
+	"name": "historias",
+	"version": "0.0.1",
+	"private": true,
+	"license": "MIT",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check",
+		"compartir": "node datos/imagenes_compartir.mjs"
+	},
+	"devDependencies": {
+		"@fontsource-variable/newsreader": "^5.3.0",
+		"@fontsource-variable/public-sans": "^5.3.0",
+		"@sveltejs/adapter-static": "^3.0.11",
+		"@sveltejs/kit": "^2.70.3",
+		"@sveltejs/vite-plugin-svelte": "^6.2.4",
+		"marked": "18.1.2",
+		"svelte": "^5.57.3",
+		"svelte-check": "^4.7.8",
+		"vite": "^7.3.7"
+	}
+}
