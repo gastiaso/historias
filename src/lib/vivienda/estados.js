@@ -13,8 +13,8 @@ export const ESTADOS = {
 	// Monográfico de junio de 2026
 	junio: 'Los últimos meses ampliados, con junio de 2026 marcado: la lupa del monográfico',
 	brecha: 'Por edad, dos encuestas: problema personal (barómetros) y «le perjudica» (monográfico)',
-	situaciones: 'Situaciones vividas en los últimos cinco años: de 18 a 34 años frente a 65 y más (monográfico)',
-	intervencion: 'Por ideología, dos encuestas: problema de España (barómetros) y «el Estado debe intervenir» (monográfico)',
+	situaciones: 'Situaciones vividas en los últimos cinco años por dos grupos de edad, que quien lee puede cambiar (monográfico)',
+	intervencion: 'Por ideología (monográfico): le preocupa, le perjudica y «el Estado debe intervenir»',
 	medidas: 'Apoyo a diez medidas: a favor, en contra y saldo (monográfico)'
 };
 
@@ -38,9 +38,10 @@ export const ROTULOS = {
 	junio: 'Etiqueta de junio de 2026 en el paso «junio»',
 	perjudica: 'Leyenda del paso «brecha»: «le perjudica», del monográfico',
 	barometros: 'Leyenda del paso «brecha»: problema personal, de los barómetros',
-	jovenes: 'Leyenda del paso «situaciones»: de 18 a 34 años',
-	mayores: 'Leyenda del paso «situaciones»: 65 y más',
 	situaciones: 'Qué situaciones salen en el paso «situaciones», separadas por comas (sus nombres están en la lista de cifras: m_<nombre>)',
+	cohortes: 'Grupos de edad marcados al llegar al paso «situaciones», separados por comas (18-24, 25-34, 35-44, 45-54, 55-64, 65 y más, 18-34, total)',
+	cohortes_titulo: 'Nombre (para lectores de pantalla) de las casillas de edad del paso «situaciones»',
+	preocupa: 'Leyenda del paso «intervencion»: le preocupa mucho o bastante, del monográfico',
 	intervenir: 'Leyenda del paso «intervencion»: el Estado debe intervenir, del monográfico',
 	favor: 'Leyenda del paso «medidas»: a favor',
 	contra: 'Leyenda del paso «medidas»: en contra',

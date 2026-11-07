@@ -92,11 +92,13 @@ Las dos encuestas dibujan la misma brecha de edad. En la de junio, la situación
 
 ¿Qué significa que te perjudique? La encuesta pregunta por lo vivido en los últimos cinco años. Entre los 18 y los 34 años, el {m_ayuda_familia_18_34:0} ha necesitado dinero de su familia para pagar el alquiler o la hipoteca; el {m_mudarse_lejos_18_34:0} se ha ido a vivir lejos de los suyos por el precio, y el {m_volver_familia_18_34:0} ha tenido que volver con su familia o compartir piso porque no podía pagar su casa.
 
-Entre los mayores de 65, ninguna de las tres pasa del {m_ayuda_familia_65_mas:0}.
+Entre los mayores de 65, ninguna de las tres pasa del {m_ayuda_familia_65_mas:0}. Encima del gráfico puedes marcar o desmarcar grupos de edad para añadirlos o quitarlos.
 
 ## intervencion
 
-La ideología también reaparece. Que el Estado intervenga en el mercado de la vivienda lo pide el {m_intervenir:0} de los entrevistados: el {m_intervenir_izq:0} en la izquierda y el {m_intervenir_centro_der:0} en el centro derecha. En la derecha vuelve a subir, hasta el {m_intervenir_der:0}.
+La situación de la vivienda preocupa casi por igual en todo el espectro ideológico: entre el {m_preocupa_centro_der:0} en el centro derecha y el {m_preocupa_centro_izq:0} en el centro izquierda. Y dice que le perjudica un porcentaje parecido en casi todos los grupos ({m_perjudica_izq:0} en la izquierda, {m_perjudica_centro_der:0} en el centro derecha), salvo en la derecha, donde sube al {m_perjudica_der:0}.
+
+Lo que separa a unos de otros es la solución. Que el Estado intervenga en el mercado de la vivienda lo pide el {m_intervenir_izq:0} en la izquierda y el {m_intervenir_centro_der:0} en el centro derecha; en la derecha vuelve a subir, hasta el {m_intervenir_der:0}.
 
 La pregunta enfrenta intervenir con dejar el precio a «la ley de la oferta y la demanda», una forma de plantearlo que puede empujar hacia la primera opción.
 
@@ -105,6 +107,12 @@ La pregunta enfrenta intervenir con dejar el precio a «la ley de la oferta y la
 ¿Qué medidas? De las diez por las que preguntó el CIS, casi todas tienen más apoyos que rechazos. El saldo más alto es el de bajar los impuestos en la compra de la primera vivienda ({m_impuestos_primera_neto} puntos), seguido de dar más garantías a los caseros ({m_garantias_caseros_neto}) y sacar suelo urbanizable al mercado ({m_suelo_urbanizable_neto}). Solo expropiar viviendas vacías tiene más rechazo que apoyo ({m_expropiar_vacias_neto}).
 
 El saldo es el porcentaje a favor menos el porcentaje en contra. Se usa porque, en baterías así, mucha gente tiende a decir que sí a todo.
+
+## medidas
+
+Cada medida del gráfico se puede abrir. Púlsala, o tócala en el móvil, y verás cómo cambia el apoyo por edad, sexo, ideología, recuerdo de voto, estudios, ocupación, clase social, tamaño del municipio o religiosidad.
+
+Las barras se leen igual que aquí: en contra a la izquierda, a favor a la derecha y el saldo al final. Cada cifra enseña su margen de error al tocarla, y los grupos con menos de 50 entrevistas van sin dato.
 
 ## cierre
 
@@ -127,8 +135,9 @@ fuente: Barómetros del CIS. Porcentaje que cita la vivienda entre los problemas
 junio: Encuesta de vivienda del CIS, {m_mes}
 perjudica: Le perjudica (encuesta de junio)
 barometros: Problema personal (barómetros, último año)
-jovenes: De 18 a 34 años
-mayores: 65 y más
+cohortes: 18-34, 65 y más
+cohortes_titulo: Grupos de edad que se muestran
+preocupa: Le preocupa mucho o bastante (encuesta de junio)
 situaciones: ayuda_familia, mudarse_lejos, volver_familia, subida_alquiler, sin_contrato, frio_calor
 intervenir: El Estado debe intervenir (encuesta de junio)
 favor: A favor

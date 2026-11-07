@@ -1,11 +1,16 @@
-// Margen de error de cada cifra del texto: al pasar el ratón, al tocarla en el móvil o al llegar con el teclado,
-// aparece un globo con su margen. Las cifras lo llevan en data-margen (ver src/lib/guion.js).
+// Globos de información: al pasar el ratón, al tocar o al llegar con el teclado a un elemento, aparece un globo
+// con el texto de uno de sus atributos data-.
+//   - En el texto: el margen de error de cada cifra (.cifra[data-margen], ver src/lib/guion.js). Es lo de serie.
+//   - En los gráficos: el % y el n de cada dato ([data-globo]); se usa con { selector: '[data-globo]', dato: 'globo' }.
+// Los elementos que ya hacen algo al pulsarlos (role="button") solo muestran el globo con el ratón.
 
-/** @param {HTMLElement} nodo */
-export function margenes(nodo) {
+/** @param {HTMLElement} nodo @param {{ selector?: string, dato?: string }} [opciones] */
+export function margenes(nodo, opciones = {}) {
+	const selector = opciones.selector ?? '.cifra[data-margen]';
+	const dato = opciones.dato ?? 'margen';
 	/** @type {HTMLDivElement | null} */
 	let globo = null;
-	/** @type {HTMLElement | null} */
+	/** @type {Element | null} */
 	let actual = null;
 
 	function mostrar(el) {
@@ -17,7 +22,7 @@ export function margenes(nodo) {
 			(nodo.closest('dialog') ?? document.body).appendChild(globo);
 		}
 		actual = el;
-		globo.textContent = el.dataset.margen;
+		globo.textContent = el.getAttribute(`data-${dato}`);
 		globo.hidden = false;
 		const r = el.getBoundingClientRect();
 		const g = globo.getBoundingClientRect();
@@ -31,27 +36,28 @@ export function margenes(nodo) {
 		actual = null;
 	}
 
-	const cifra = (e) => /** @type {HTMLElement | null} */ (e.target instanceof Element ? e.target.closest('.cifra[data-margen]') : null);
+	const objetivo = (e) => (e.target instanceof Element ? e.target.closest(selector) : null);
 
 	const sobre = (e) => {
 		if (e.pointerType === 'touch') return;
-		const el = cifra(e);
+		const el = objetivo(e);
 		if (el) mostrar(el);
 	};
 	const fuera = (e) => {
-		if (e.pointerType !== 'touch' && cifra(e)) ocultar();
+		if (e.pointerType !== 'touch' && objetivo(e)) ocultar();
 	};
 	// Con el dedo, tocar abre y volver a tocar cierra; con el ratón, el clic no cierra lo que abrió el paso por encima.
 	const toque = (e) => {
-		const el = cifra(e);
+		const el = objetivo(e);
+		if (el?.closest('[role="button"]')) return;
 		if (!el || (e.pointerType === 'touch' && el === actual)) ocultar();
 		else mostrar(el);
 	};
 	const foco = (e) => {
-		const el = cifra(e);
+		const el = objetivo(e);
 		if (el) mostrar(el);
 	};
-	const fueraDelTexto = (e) => {
+	const fueraDelNodo = (e) => {
 		if (actual && !(e.target instanceof Node && nodo.contains(e.target))) ocultar();
 	};
 
@@ -60,19 +66,19 @@ export function margenes(nodo) {
 	nodo.addEventListener('click', toque);
 	nodo.addEventListener('focusin', foco);
 	nodo.addEventListener('focusout', ocultar);
-	document.addEventListener('pointerdown', fueraDelTexto);
+	document.addEventListener('pointerdown', fueraDelNodo);
 	window.addEventListener('scroll', ocultar, { passive: true });
 	nodo.addEventListener('scroll', ocultar, { passive: true });
 
 	return {
 		destroy() {
-			nodo.removeEventListener('scroll', ocultar);
 			nodo.removeEventListener('pointerover', sobre);
 			nodo.removeEventListener('pointerout', fuera);
 			nodo.removeEventListener('click', toque);
 			nodo.removeEventListener('focusin', foco);
 			nodo.removeEventListener('focusout', ocultar);
-			document.removeEventListener('pointerdown', fueraDelTexto);
+			nodo.removeEventListener('scroll', ocultar);
+			document.removeEventListener('pointerdown', fueraDelNodo);
 			window.removeEventListener('scroll', ocultar);
 			globo?.remove();
 		}

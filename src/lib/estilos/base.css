@@ -17,6 +17,14 @@
 	--banda-teja: rgba(179, 64, 31, 0.16);
 	--banda-azul: rgba(45, 93, 123, 0.16);
 	--contra: #c4b9a6;
+	/* Grupos de edad (ordenados): azules de claro (18-24) a oscuro (65 y más), todos a 3:1 o más sobre el papel. */
+	--edad-1: #5a8db0;
+	--edad-2: #477aa0;
+	--edad-3: #36678c;
+	--edad-4: #2a5477;
+	--edad-5: #1d4060;
+	--edad-6: #0f2b44;
+	--edad-12: #4f84a8;
 	--sombra: 0 10px 26px -14px rgba(70, 45, 20, 0.35);
 
 	--f-texto: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
@@ -42,6 +50,14 @@
 		--banda-teja: rgba(224, 113, 74, 0.2);
 		--banda-azul: rgba(127, 176, 208, 0.2);
 		--contra: #5a5044;
+		/* En oscuro, más edad es más claro (más intenso sobre el fondo). */
+		--edad-1: #4f7fa3;
+		--edad-2: #5f92b7;
+		--edad-3: #74a6c9;
+		--edad-4: #8bb9d8;
+		--edad-5: #a6cde6;
+		--edad-6: #c4e0f2;
+		--edad-12: #5788ad;
 		--sombra: 0 10px 26px -14px rgba(0, 0, 0, 0.6);
 		color-scheme: dark;
 	}
@@ -178,7 +194,13 @@ a:hover {
 	background: var(--tinta);
 	color: var(--papel);
 	font: 500 0.75rem/1.35 var(--f-rotulo);
+	white-space: pre-line;
 	pointer-events: none;
+}
+
+/* Zonas de los gráficos que enseñan un globo con su dato. */
+[data-globo] {
+	cursor: help;
 }
 
 /* Con un diálogo abierto, la historia de debajo no se desplaza. */
