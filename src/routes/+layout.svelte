@@ -25,6 +25,13 @@
 				Los datos salen de <a href="https://gastiaso.github.io/barometros/">Barómetro a barómetro</a>,
 				que reúne los microdatos de los barómetros mensuales del CIS.
 			</p>
+			<p>
+				Textos, gráficos y datos de elaboración propia, con licencia
+				<a href="https://creativecommons.org/licenses/by/4.0/deed.es">CC BY 4.0</a>; el código,
+				<a href="https://github.com/gastiaso/historias/blob/main/LICENSE">MIT</a>. Los datos del CIS siguen sus
+				<a href="https://www.cis.es/es/aviso-legal">condiciones de reutilización</a>.
+				<a href="https://github.com/gastiaso/historias/blob/main/LICENCIA-DATOS.md">Detalle y cómo citar</a>.
+			</p>
 			<p>Guillermo Astiaso. Esta web no usa cookies ni analítica.</p>
 		</div>
 	</footer>
