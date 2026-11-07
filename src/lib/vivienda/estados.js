@@ -45,5 +45,12 @@ export const ROTULOS = {
 	favor: 'Leyenda del paso «medidas»: a favor',
 	contra: 'Leyenda del paso «medidas»: en contra',
 	saldo: 'Título de la columna de saldo en el paso «medidas»',
+	desglose_pista: 'Invitación, bajo el gráfico de medidas, a elegir una para ver su desglose',
+	desglose: 'Antetítulo del panel de desglose de una medida',
+	desglose_por: 'Nombre (para lectores de pantalla) de los botones de cruce del desglose',
+	desglose_total: 'Nombre de la fila del total en el desglose',
+	desglose_pocas: 'Texto de los grupos sin dato por tener menos de 50 entrevistas',
+	desglose_nota: 'Nota al pie del panel de desglose',
+	cruces: 'Cruces que ofrece el desglose, en orden y separados por comas: sexo, edad, estudios, municipio, voto, ocupacion, clase, ideologia, religiosidad',
 	fuente_monografico: 'Fuente y medida del monográfico, al pie del gráfico'
 };

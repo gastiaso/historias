@@ -25,12 +25,28 @@ function comprobarSituaciones(guion) {
 	guion.rotulos.situaciones = ids;
 }
 
+/** Los cruces elegidos en el rótulo «cruces» tienen que existir en los datos. */
+function comprobarCruces(guion) {
+	const ids = guion.rotulos.cruces.split(',').map((s) => s.trim()).filter(Boolean);
+	const hay = mono.cruces.map((c) => c.id);
+	const malos = ids.filter((id) => !hay.includes(id));
+	if (malos.length) {
+		throw new Error(`Rótulos (cruces): no existen ${malos.map((x) => `«${x}»`).join(', ')}. Los válidos son: ${hay.join(', ')}.`);
+	}
+	if (!ids.length) throw new Error('Rótulos (cruces): no hay ningún cruce elegido.');
+	guion.rotulos.cruces = ids;
+}
+
+// El desglose de las medidas (unos 120 KB) no va en la página: el panel lo descarga al abrirse.
+const monoLigero = { ...mono, medidas: mono.medidas.map(({ desglose, ...m }) => m) };
+
 export function load() {
 	let cifras, guion;
 	try {
 		cifras = cifrasVivienda(serie, grupos, puntos, mono);
 		guion = leerGuion(fuente, cifras, ESTADOS, ROTULOS);
 		comprobarSituaciones(guion);
+		comprobarCruces(guion);
 	} catch (e) {
 		// Al escribir, el fallo se ve en la propia página; al construir, para la construcción con el mismo mensaje.
 		if (dev) error(500, e.message);
@@ -41,7 +57,7 @@ export function load() {
 		guion,
 		serie,
 		grupos,
-		mono,
+		mono: monoLigero,
 		lineaEdicion: `Datos de ${mes(E.desde)} a ${mes(E.hasta)}`,
 		// Solo mientras se escribe (npm run dev): la lista de cifras y los avisos. No se publican.
 		ayuda: dev ? { cifras: escribirLista(cifras), estados: ESTADOS, rotulos: ROTULOS, avisos: guion.avisos } : null

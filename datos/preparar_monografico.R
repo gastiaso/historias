@@ -75,6 +75,56 @@ SITUACIONES <- list(
   sin_contrato        = c("Ha estado alquilado/a sin contrato", "Alquiler sin contrato")
 )
 
+# Cruces del desglose de las medidas: hoja del Excel, nombre, nota y grupos (rótulo = columnas del CIS que suma).
+# Las columnas de N.S., N.C. y N.R. no se muestran, salvo en ideología («No se ubica»). Los grupos con
+# menos de 50 entrevistas se quedan sin dato.
+CRUCES <- list(
+  sexo = list(hoja = "Sexo", nombre = "Sexo", nota = "", grupos = list("Hombres" = "Hombre", "Mujeres" = "Mujer")),
+  edad = list(hoja = "Edad", nombre = "Edad", nota = "", grupos = list(
+    "De 18 a 24 años" = "De 18 a 24 años", "De 25 a 34 años" = "De 25 a 34 años", "De 35 a 44 años" = "De 35 a 44 años",
+    "De 45 a 54 años" = "De 45 a 54 años", "De 55 a 64 años" = "De 55 a 64 años", "De 65 a 74 años" = "De 65 a 74 años",
+    "75 años y más" = "75 y más años")),
+  estudios = list(hoja = "Nivel de estudios", nombre = "Estudios", nota = "", grupos = list(
+    "Sin estudios" = "Sin estudios", "Primaria" = "Primaria", "Secundaria, primera etapa" = "Secundaria 1ª etapa",
+    "Secundaria, segunda etapa" = "Secundaria 2ª etapa", "Formación profesional" = "F.P.", "Superiores" = "Superiores",
+    "Otros" = "Otros")),
+  municipio = list(hoja = "Tamaño de municipio", nombre = "Tamaño del municipio", nota = "", grupos = list(
+    "Hasta 2.000 habitantes" = "Menos o igual a 2.000 habitantes", "De 2.001 a 10.000" = "2.001 a 10.000 habitantes",
+    "De 10.001 a 50.000" = "10.001 a 50.000 habitantes", "De 50.001 a 100.000" = "50.001 a 100.000 habitantes",
+    "De 100.001 a 400.000" = "100.001 a 400.000 habitantes", "De 400.001 a 1.000.000" = "400.001 a 1.000.000 habitantes",
+    "Más de 1.000.000" = "Más de 1.000.000 habitantes")),
+  voto = list(hoja = "RV EG23", nombre = "Recuerdo de voto",
+    nota = "Voto en las elecciones generales de 2023, según lo recuerdan. Solo personas con nacionalidad española.",
+    grupos = list(
+      "PP" = "PP", "PSOE" = "PSOE", "Vox" = "VOX", "Sumar" = "Sumar", "ERC" = "ERC", "Junts" = "Junts", "EH Bildu" = "EH Bildu",
+      "PNV" = "EAJ-PNV", "BNG" = "BNG", "Coalición Canaria" = "CCa", "UPN" = "UPN", "PACMA" = "PACMA", "Otro partido" = "Otro partido",
+      "En blanco" = "En blanco", "Nulo" = "Nulo", "No votó" = "No votó", "No tenía edad" = "No tenía edad",
+      "No tenía derecho a voto" = "No tenía derecho a voto")),
+  ocupacion = list(hoja = "Ocupación", nombre = "Ocupación", nota = "Ocupación de quien trabaja; situación de quien no trabaja.", grupos = list(
+    "Directivos y gerentes" = "Directores/as y gerentes",
+    "Profesionales científicos e intelectuales" = "Profesionales, científicos/as e intelectuales",
+    "Técnicos y profesionales de nivel medio" = "Técnicos/as y profesionales de nivel medio",
+    "Apoyo administrativo" = "Personal de apoyo administrativo",
+    "Servicios y comercio" = "Trabajadores/as de los servicios y vendedores/as de comercios y mercados",
+    "Agricultura, ganadería y pesca" = "Agricultores/as y trabajadores/as agropecuarios/as, forestales y pesqueros/as",
+    "Oficiales, operarios y artesanos" = "Oficiales/as, operarios/as y artesanos/as",
+    "Operadores de máquinas" = "Operadores/as de instalaciones y máquinas y ensambladores/as",
+    "Ocupaciones elementales" = "Ocupaciones elementales",
+    "Militares y policías" = "Ocupaciones militares y cuerpos policiales",
+    "Jubilados y pensionistas" = "Jubilado o pensionista (anteriormente ha trabajado)",
+    "Estudiantes" = "Estudiante", "Trabajo doméstico no remunerado" = "Trabajo doméstico no remunerado",
+    "Otra situación inactiva" = "Otra situación inactiva", "En paro" = "Parados/as")),
+  clase = list(hoja = "Clase social", nombre = "Clase social", nota = "Clase con la que se identifica la persona entrevistada.", grupos = list(
+    "Alta y media alta" = "Clase alta y media alta", "Media-media" = "Clase media-media", "Media-baja" = "Clase media-baja",
+    "Trabajadora" = "Clase trabajadora/obrera/proletariado", "Baja o pobre" = "Clase baja/pobre", "Otras" = "Otras")),
+  ideologia = list(hoja = "Escala de ideología", nombre = "Ideología", nota = "Autoubicación en la escala de 1 (izquierda) a 10 (derecha).",
+    grupos = c(IDEO, list("No se ubica" = c("N.S.", "N.C.")))),
+  religiosidad = list(hoja = "Religiosidad", nombre = "Religiosidad", nota = "", grupos = list(
+    "Católicos practicantes" = "Católico/a practicante", "Católicos no practicantes" = "Católico/a no practicante",
+    "Creyentes de otra religión" = "Creyente de otra religión", "Agnósticos" = "Agnóstico/a",
+    "Indiferentes, no creyentes" = "Indiferente, no creyente", "Ateos" = "Ateo/a"))
+)
+
 # Medidas (P24): identificador, principio del texto y rótulo corto.
 MEDIDAS <- list(
   congelar            = c("Congelar los precios del alquiler", "Congelar el alquiler dos años"),
@@ -197,6 +247,7 @@ args <- commandArgs(TRUE)
 if (length(args) < 1) stop("Uso: Rscript datos/preparar_monografico.R RUTA/3532-multi_A.xlsx [RUTA/3532-multi01_A.xlsx]")
 ruta <- args[1]
 hojas <- list(Edad = leer_hoja(ruta, "Edad"), Ideologia = leer_hoja(ruta, "Escala de ideología"))
+hojas_cruce <- lapply(CRUCES, function(cr) leer_hoja(ruta, cr$hoja))
 especiales <- if (length(args) >= 2) leer_hoja(args[2], "Sexo") else NULL
 
 indicadores <- lapply(names(INDICADORES), function(id) {
@@ -218,10 +269,23 @@ medidas <- lapply(names(MEDIDAS), function(id) {
   favor <- indicador(hojas, "24", "A favor", m[1])
   contra <- indicador(hojas, "24", "En contra", m[1])
   neto <- function(a, b) if (is.null(a$v) || is.null(b$v)) NULL else round(a$v - b$v, 1)
+  sin_n <- function(x) x[c("v", "lo", "hi")]
+  # Desglose: cada medida en cada grupo de cada cruce
+  desglose <- lapply(names(CRUCES), function(k) {
+    cr <- CRUCES[[k]]
+    bc <- buscar(hojas_cruce[[k]], "24", m[1])
+    lapply(names(cr$grupos), function(g) {
+      f <- medir(bc, "A favor", cr$grupos[[g]])
+      c <- medir(bc, "En contra", cr$grupos[[g]])
+      list(g = g, n = f$n, favor = sin_n(f), contra = sin_n(c), neto = neto(f, c))
+    })
+  })
+  names(desglose) <- names(CRUCES)
   list(
     id = id, texto = b$item, corto = m[2],
     favor = favor$total, contra = contra$total, neto = neto(favor$total, contra$total),
-    ideologia = Map(function(f, c) list(g = f$g, favor = f$v, contra = c$v, neto = neto(f, c)), favor$ideologia, contra$ideologia)
+    ideologia = Map(function(f, c) list(g = f$g, favor = f$v, contra = c$v, neto = neto(f, c)), favor$ideologia, contra$ideologia),
+    desglose = desglose
   )
 })
 
@@ -243,7 +307,8 @@ salida <- list(
   ),
   indicadores = indicadores,
   situaciones = situaciones,
-  medidas = medidas
+  medidas = medidas,
+  cruces = lapply(names(CRUCES), function(k) list(id = k, nombre = CRUCES[[k]]$nombre, nota = CRUCES[[k]]$nota))
 )
 
 destino <- file.path("static", "datos", "vivienda", "monografico.json")

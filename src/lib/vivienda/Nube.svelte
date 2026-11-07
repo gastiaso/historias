@@ -109,7 +109,7 @@
 	});
 </script>
 
-<div class="capa" class:oculta={!visible || !puntos}>
+<div class="capa" class:oculta={!visible || !puntos} aria-hidden="true">
 	<canvas bind:this={lienzo} style="width:{w}px;height:{h}px"></canvas>
 	<svg width={w} height={h} class:oculta={!etiquetas}>
 		<text class="r" x={zona.left} y={zona.top - 10} font-size={fs}>{rotulo}</text>

@@ -13,7 +13,8 @@ export function margenes(nodo) {
 			globo = document.createElement('div');
 			globo.className = 'globo-margen';
 			globo.setAttribute('role', 'tooltip');
-			document.body.appendChild(globo);
+			// Dentro de un <dialog> modal, el globo tiene que ir en el propio diálogo para verse por encima.
+			(nodo.closest('dialog') ?? document.body).appendChild(globo);
 		}
 		actual = el;
 		globo.textContent = el.dataset.margen;
@@ -61,9 +62,11 @@ export function margenes(nodo) {
 	nodo.addEventListener('focusout', ocultar);
 	document.addEventListener('pointerdown', fueraDelTexto);
 	window.addEventListener('scroll', ocultar, { passive: true });
+	nodo.addEventListener('scroll', ocultar, { passive: true });
 
 	return {
 		destroy() {
+			nodo.removeEventListener('scroll', ocultar);
 			nodo.removeEventListener('pointerover', sobre);
 			nodo.removeEventListener('pointerout', fuera);
 			nodo.removeEventListener('click', toque);

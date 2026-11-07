@@ -1,10 +1,14 @@
 <script>
 	import Historia from '$lib/motor/Historia.svelte';
 	import Grafico from '$lib/vivienda/Grafico.svelte';
+	import Desglose from '$lib/vivienda/Desglose.svelte';
 
 	let { data } = $props();
 	const guion = $derived(data.guion);
 	const ayuda = $derived(data.ayuda);
+
+	/** Medida cuyo desglose está abierto (o null). */
+	let abierta = $state(null);
 </script>
 
 <svelte:head>
@@ -33,9 +37,12 @@
 
 	{#snippet grafico({ estado, progreso, primero, enPortada, movil })}
 		<Grafico {estado} {progreso} {primero} {enPortada} {movil}
-			serie={data.serie} grupos={data.grupos} mono={data.mono} rotulos={guion.rotulos} />
+			serie={data.serie} grupos={data.grupos} mono={data.mono} rotulos={guion.rotulos}
+			onelegir={(id) => (abierta = id)} />
 	{/snippet}
 </Historia>
+
+<Desglose id={abierta} cruces={guion.rotulos.cruces} rotulos={guion.rotulos} onclose={() => (abierta = null)} />
 
 {#if ayuda}
 	<details class="columna ayuda">

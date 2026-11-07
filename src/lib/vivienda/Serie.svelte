@@ -90,7 +90,7 @@
 	const pie = $derived(e.b + fs * 2 + 14);
 </script>
 
-<svg class="capa" class:oculta={!visible} width={w} height={h}>
+<svg class="capa" class:oculta={!visible} width={w} height={h} aria-hidden="true">
 	<defs>
 		<clipPath id="{uid}-area">
 			<rect x={e.l} y={e.t - 30} width={Math.max(0, e.r - e.l)} height={e.b - e.t + 60} />

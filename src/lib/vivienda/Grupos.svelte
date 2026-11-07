@@ -116,7 +116,7 @@
 	const dur = $derived(prefersReducedMotion.current ? 0 : 300);
 </script>
 
-<svg class="capa" class:oculta={!visible} width={w} height={h}>
+<svg class="capa" class:oculta={!visible} width={w} height={h} aria-hidden="true">
 	<!-- Leyenda -->
 	{#each leyenda as l, i (l.t)}
 		<g transform="translate({posLeyenda[i].x}, {posLeyenda[i].y})" in:fade={{ duration: dur }}>

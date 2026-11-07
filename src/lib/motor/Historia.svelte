@@ -57,7 +57,8 @@
 </script>
 
 <article class="historia">
-	<div class="escenario" aria-hidden="true">
+	<!-- Cada capa decorativa del gráfico se oculta a los lectores de pantalla por su cuenta; las interactivas no. -->
+	<div class="escenario">
 		{@render grafico({ estado, progreso, primero, enPortada: activo < 0, movil: !ancha.current })}
 	</div>
 

@@ -155,7 +155,7 @@ function cifrasMonografico(m, { pct, otra }) {
 		pct(`m_${x.id}_contra`, 'pct', x.contra, `Monográfico: en contra de «${x.corto.toLowerCase()}»`);
 		otra(`m_${x.id}_neto`, signo(x.neto), `Monográfico: saldo (a favor menos en contra) de «${x.corto.toLowerCase()}», en puntos, sin decimales`);
 		for (const g of x.ideologia) {
-			if (g.neto != null) otra(`m_${x.id}_neto_${clave(IDEO, g.g)}`, signo(g.neto), `Monográfico: apoyo neto a «${x.corto.toLowerCase()}», ${g.g}`);
+			if (g.neto != null) otra(`m_${x.id}_neto_${clave(IDEO, g.g)}`, signo(g.neto), `Monográfico: saldo de «${x.corto.toLowerCase()}», ${g.g}`);
 		}
 	}
 }

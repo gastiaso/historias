@@ -25,6 +25,7 @@ y abrir <http://localhost:5173/historias/vivienda/>. La página se recarga al gu
 - `src/lib/motor/Historia.svelte`: el motor. Gráfico fijo a pantalla completa (en escritorio, a la derecha) y los pasos del guion, que suben por encima y cambian el estado del gráfico al cruzar una línea de la pantalla.
 - `src/lib/vivienda/`: los gráficos de la vivienda (nube, serie y grupos), sus estados y sus cifras.
 - `src/lib/guion.js`: lee el guion y rellena las cifras.
+- `src/lib/vivienda/Desglose.svelte`: el panel que se abre al elegir una medida, con su desglose por los cruces del CIS. Los cruces que ofrece se eligen en el rótulo `cruces` del guion.
 - Con `prefers-reduced-motion`, los estados cambian sin animación y la línea aparece entera.
 
 ## Datos
@@ -43,9 +44,11 @@ Rscript datos/preparar_monografico.R RUTA/3532-multi_A.xlsx RUTA/3532-multi01_A.
 
 Reconstruye los conteos ponderados con la base de cada columna, así que agrupar edades o tramos de ideología es exacto. Los márgenes son aproximados: sin microdatos, el efecto de diseño se estima a partir de la sobremuestra urbana (el método está al principio del script).
 
-## Construir
+## Construir y publicar
 
 `npm run build` genera el sitio estático en `build/`. Si el guion cita una cifra que no existe, la construcción se detiene con el mismo mensaje.
+
+El workflow `.github/workflows/publicar.yml` hace lo mismo en GitHub. En cada pull request comprueba y construye el sitio, sin publicarlo. Al fusionar en `main`, lo publica en GitHub Pages. No recalcula los datos: los JSON de `static/datos/` van en el repositorio, anclados a su edición. Requiere que el repositorio tenga Pages con origen «GitHub Actions» (Settings → Pages).
 
 ## Licencias
 

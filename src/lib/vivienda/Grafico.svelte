@@ -10,7 +10,7 @@
 	import Medidas from './Medidas.svelte';
 	import { DEL_MONOGRAFICO } from './estados.js';
 
-	let { estado, progreso, primero, enPortada, movil, serie, grupos, mono, rotulos } = $props();
+	let { estado, progreso, primero, enPortada, movil, serie, grupos, mono, rotulos, onelegir } = $props();
 
 	let w = $state(375);
 	let h = $state(740);
@@ -52,9 +52,9 @@
 		visible={capa === 'nube'} color={estado === 'nube-vivienda'} etiquetas={!enPortada} />
 	<Serie {w} {h} {zona} {fs} {estado} {revelado} {serie} {rotulos} mesLupa={mono.meta.mes} visible={capa === 'serie'} />
 	<Grupos {w} {h} {zona} {fs} {estado} {grupos} {mono} {rotulos} visible={capa === 'grupos'} />
-	<Medidas {w} {h} {zona} {fs} medidas={mono.medidas} {rotulos} visible={capa === 'medidas'} />
+	<Medidas {w} {h} {zona} {fs} medidas={mono.medidas} {rotulos} {onelegir} visible={capa === 'medidas'} />
 	{#key fuente}
-		<p class="fuente" class:oculta={enPortada} style="top: {zona.bottom + fs * 5 + 24}px">{fuente}</p>
+		<p class="fuente" class:oculta={enPortada} style="top: {zona.bottom + fs * 5 + 24}px" aria-hidden="true">{fuente}</p>
 	{/key}
 </div>
 

@@ -181,6 +181,11 @@ a:hover {
 	pointer-events: none;
 }
 
+/* Con un diálogo abierto, la historia de debajo no se desplaza. */
+:root:has(dialog[open]) {
+	overflow: hidden;
+}
+
 /* Rótulos dentro de los gráficos (SVG). */
 .r {
 	font-family: var(--f-rotulo);
