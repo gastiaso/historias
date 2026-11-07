@@ -46,7 +46,8 @@ jobs:
       - name: Comprobar que están las páginas y los datos
         run: |
           for f in build/index.html build/vivienda/index.html build/datos/vivienda/serie.json \
-                   build/datos/vivienda/puntos.json build/datos/vivienda/monografico.json; do
+                   build/datos/vivienda/puntos.json build/datos/vivienda/monografico.json \
+                   build/compartir/sitio.png build/compartir/vivienda.png; do
             test -s "$f" || { echo "Falta $f"; exit 1; }
           done
           if grep -q "Cifras disponibles para el guion" build/vivienda/index.html; then

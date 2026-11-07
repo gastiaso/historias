@@ -1,10 +1,11 @@
 <script>
 	import { page } from '$app/state';
 	import { base } from '$app/paths';
+	import { NOMBRE } from '$lib/sitio.js';
 </script>
 
 <svelte:head>
-	<title>Error · Historias con los barómetros del CIS</title>
+	<title>Error · {NOMBRE}</title>
 </svelte:head>
 
 <div class="columna error">

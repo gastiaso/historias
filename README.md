@@ -44,6 +44,18 @@ Rscript datos/preparar_monografico.R RUTA/3532-multi_A.xlsx RUTA/3532-multi01_A.
 
 Reconstruye los conteos ponderados con la base de cada columna, así que agrupar edades o tramos de ideología es exacto. Los márgenes son aproximados: sin microdatos, el efecto de diseño se estima a partir de la sobremuestra urbana (el método está al principio del script).
 
+## Compartir
+
+El nombre, la descripción y la dirección del sitio están en `src/lib/sitio.js`. Cada página lleva sus etiquetas para compartir (título, descripción e imagen), y la portada toma el título y la entradilla de cada historia de su guion.
+
+Las imágenes para compartir (1200 × 630) están en `static/compartir/` y se generan con los datos, el título del guion y el nombre del sitio:
+
+```
+npm run compartir
+```
+
+Usan Edge o Chrome sin ventana; si no están en su sitio habitual, la ruta se indica con la variable `NAVEGADOR`. Hay que volver a generarlas si cambia el título del guion, el nombre del sitio o los datos.
+
 ## Construir y publicar
 
 `npm run build` genera el sitio estático en `build/`. Si el guion cita una cifra que no existe, la construcción se detiene con el mismo mensaje.

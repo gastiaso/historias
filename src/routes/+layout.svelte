@@ -5,13 +5,14 @@
 	import '@fontsource-variable/public-sans/wght.css';
 	import '$lib/estilos/base.css';
 	import { base } from '$app/paths';
+	import { NOMBRE } from '$lib/sitio.js';
 
 	let { children } = $props();
 </script>
 
 <div class="sitio">
 	<header class="cabecera">
-		<a class="marca rotulo" href="{base}/">Historias con los barómetros del CIS</a>
+		<a class="marca rotulo" href="{base}/">{NOMBRE}</a>
 	</header>
 
 	<main>

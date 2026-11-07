@@ -8,7 +8,8 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"check": "svelte-kit sync && svelte-check"
+		"check": "svelte-kit sync && svelte-check",
+		"compartir": "node datos/imagenes_compartir.mjs"
 	},
 	"devDependencies": {
 		"@fontsource-variable/newsreader": "^5.3.0",

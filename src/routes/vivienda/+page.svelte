@@ -2,6 +2,8 @@
 	import Historia from '$lib/motor/Historia.svelte';
 	import Grafico from '$lib/vivienda/Grafico.svelte';
 	import Desglose from '$lib/vivienda/Desglose.svelte';
+	import Compartir from '$lib/Compartir.svelte';
+	import { NOMBRE } from '$lib/sitio.js';
 
 	let { data } = $props();
 	const guion = $derived(data.guion);
@@ -11,10 +13,8 @@
 	let abierta = $state(null);
 </script>
 
-<svelte:head>
-	<title>{guion.cabecera.titulo.replace(/<[^>]+>/g, '')}</title>
-	<meta name="description" content={guion.cabecera.entradilla.replace(/<[^>]+>/g, '')} />
-</svelte:head>
+<Compartir titulo={data.compartir.titulo} descripcion={data.compartir.descripcion} ruta="/vivienda/" imagen="vivienda.png" tipo="article"
+	alt="Línea del porcentaje de entrevistados por el CIS que citan la vivienda entre los problemas de España, de 2021 a 2026" />
 
 {#if ayuda?.avisos.length}
 	<aside class="columna avisos">
@@ -27,7 +27,7 @@
 
 <Historia pasos={guion.pasos}>
 	{#snippet portada()}
-		<p class="rotulo antetitulo">Historias con los barómetros del CIS</p>
+		<p class="rotulo antetitulo">{NOMBRE}</p>
 		<h1>{@html guion.cabecera.titulo}</h1>
 		<p class="entradilla">{@html guion.cabecera.entradilla}</p>
 		<p class="rotulo">

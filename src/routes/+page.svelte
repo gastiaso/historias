@@ -1,28 +1,29 @@
 <script>
 	import { base } from '$app/paths';
+	import Compartir from '$lib/Compartir.svelte';
+	import { NOMBRE, DESCRIPCION } from '$lib/sitio.js';
+
+	let { data } = $props();
 </script>
 
-<svelte:head>
-	<title>Historias con los barómetros del CIS</title>
-	<meta
-		name="description"
-		content="Historias contadas con los barómetros mensuales del CIS, a partir de Barómetro a barómetro."
-	/>
-</svelte:head>
+<Compartir titulo={NOMBRE} descripcion={DESCRIPCION} imagen="sitio.png"
+	alt="Nube de puntos gris: cada punto, una persona entrevistada en los barómetros del CIS desde 2021" />
 
 <div class="columna portada">
-	<h1>Historias con los barómetros del CIS</h1>
-	<p class="entradilla">
-		Cada mes, el CIS pregunta a miles de personas por los problemas del país y por los suyos. Estas
-		historias cuentan qué ha cambiado, con sus cifras y sus márgenes de error.
-	</p>
+	<h1>{NOMBRE}</h1>
+	<p class="entradilla">{DESCRIPCION}</p>
 
 	<ul class="historias">
-		<li class="tarjeta">
-			<span class="rotulo">Primera historia · En preparación</span>
-			<h2><a href="{base}/vivienda/">La vivienda</a></h2>
-			<p>Cómo se convirtió en el primer problema de España, y para quién.</p>
-		</li>
+		{#each data.historias as h (h.ruta)}
+			<li class="tarjeta">
+				<a class="enlace" href="{base}/{h.ruta}">
+					<span class="rotulo">{h.edicion}</span>
+					<h2>{h.titulo}</h2>
+					<p>{h.entradilla}</p>
+					<span class="leer rotulo">Leer la historia →</span>
+				</a>
+			</li>
+		{/each}
 	</ul>
 </div>
 
@@ -48,8 +49,37 @@
 		padding: 0;
 	}
 
+	.historias .tarjeta {
+		padding: 0;
+		transition: box-shadow 0.2s;
+	}
+
+	.enlace {
+		display: block;
+		padding: 16px 18px 18px;
+		color: inherit;
+		text-decoration: none;
+	}
+
 	.historias h2 {
-		font-size: 1.875rem;
-		margin: 0.4rem 0 0.35rem;
+		font-size: 1.75rem;
+		margin: 0.5rem 0 0.5rem;
+	}
+
+	.enlace p {
+		margin: 0 0 0.75rem;
+		color: var(--tinta-2);
+	}
+
+	.leer {
+		color: var(--teja);
+	}
+
+	.enlace:hover h2 {
+		color: var(--teja);
+	}
+
+	.enlace:focus-visible {
+		outline-offset: -2px;
 	}
 </style>

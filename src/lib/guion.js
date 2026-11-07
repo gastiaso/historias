@@ -6,6 +6,19 @@ import { decimal, entero, porcentaje } from '$lib/formato.js';
 
 const marked = new Marked({ async: false, gfm: true });
 
+/** HTML del guion → texto llano (para títulos de página, descripciones y etiquetas para compartir). */
+export function aTexto(html) {
+	return html
+		.replace(/<[^>]+>/g, '')
+		.replace(/&nbsp;| /g, ' ')
+		.replace(/&quot;/g, '"')
+		.replace(/&#39;/g, "'")
+		.replace(/&lt;/g, '<')
+		.replace(/&gt;/g, '>')
+		.replace(/&amp;/g, '&')
+		.trim();
+}
+
 /** Nombre reservado: el apartado «## rotulos» no es un paso, sino los textos cortos de los gráficos. */
 const ROTULOS = 'rotulos';
 
