@@ -1,12 +1,12 @@
 # Historias con los barómetros del CIS
 
-**Historias para leer con scroll, contadas con los barómetros del CIS: el gráfico cambia mientras avanza el texto y cada cifra lleva su margen de error.**
+**Historias para leer con scroll, contadas con los barómetros del CIS: el gráfico cambia mientras avanza el texto.**
 
 ### → [gastiaso.github.io/historias](https://gastiaso.github.io/historias/)
 
 [![Cómo la vivienda se convirtió en el primer problema de España: porcentaje que cita la vivienda como problema de España en los barómetros del CIS, de enero de 2021 a octubre de 2026](static/compartir/vivienda.png)](https://gastiaso.github.io/historias/vivienda/)
 
-Cada mes, el Centro de Investigaciones Sociológicas (CIS) pregunta a unas 4000 personas cuáles son los principales problemas de España y cuáles les afectan personalmente. [*Barómetro a barómetro*](https://gastiaso.github.io/barometros/) reúne esos barómetros para que cada cual construya sus series. Este sitio hace lo contrario: elige una pregunta y la cuenta de principio a fin. El gráfico ocupa la pantalla y cambia con cada párrafo: una nube de entrevistas que se colorea, una línea que se dibuja, grupos que se separan. Al final de cada historia, un enlace abre la herramienta con la misma configuración para seguir mirando.
+Cada mes, el Centro de Investigaciones Sociológicas (CIS) pregunta a unas 4000 personas cuáles son los principales problemas de España y cuáles les afectan personalmente. [*Barómetro a barómetro*](https://gastiaso.github.io/barometros/) reúne esos barómetros para que cada cual construya sus series. Este sitio elige un tema y lo explora a través de los datos.
 
 ## Historias
 
@@ -23,15 +23,6 @@ En noviembre de 2023, el 5,6 % de los entrevistados citaba la vivienda entre los
 - **El salto de octubre de 2026.** Fueron 18,2 puntos en un mes, pero ese cuestionario preguntaba por vivienda antes de la pregunta de problemas. Mezcla noticia y cuestionario, y por eso no es el titular.
 - **La encuesta de vivienda de junio de 2026.** Qué significa que la vivienda te perjudique: en los últimos cinco años, el 31 % de quienes tienen de 18 a 34 años ha necesitado dinero de su familia para pagar el alquiler o la hipoteca. También, quién pide que el Estado intervenga y qué apoyo tienen diez medidas, cada una con su desglose por edad, sexo, ideología, recuerdo de voto, estudios, ocupación, clase social, tamaño del municipio y religiosidad.
 
-## Qué tienen estas historias
-
-- **Ninguna cifra sin su margen.** Al pasar el ratón por una cifra del texto, o al tocarla, sale su intervalo al 95 %. En los gráficos, cada dato enseña además el número de entrevistas en que se basa. El margen se calcula con el tamaño efectivo de la muestra (efecto de diseño de Kish de la ponderación de cada estudio). Nunca se muestra un dato con menos de 50 entrevistas.
-- **Las cifras del texto no se escriben a mano.** El guion dice `{esp_media}` y, al construir el sitio, se convierte en «43,6 %» a partir de los datos. Si el guion cita una cifra que no existe, el sitio no se construye; si alguien escribe un porcentaje a mano, se avisa.
-- **Las cautelas van dentro de la historia.** La ruptura de noviembre de 2023 (el CIS empieza a ponderar por nivel de estudios) está marcada en la línea, y ninguna comparación la cruza. Los cuestionarios que preguntan por vivienda antes de la pregunta de problemas llevan su aviso, y la nube de entrevistas dice que va sin ponderar.
-- **Ediciones fechadas.** Cada historia se ancla a una versión de los datos de *Barómetro a barómetro* y no se recalcula cada mes: lo que dice el día que se publica lo sigue diciendo después.
-- **Se explora sin salir de la historia.** En el gráfico de situaciones se marcan o desmarcan grupos de edad, y cada medida se abre con su desglose por grupos.
-- **Pensadas para el móvil**, con el gráfico fijo y el texto por encima. Se pueden recorrer con el teclado y, con «reducir movimiento» activado en el sistema, los gráficos cambian sin animación.
-- **Nada se calcula en el navegador.** Los datos llegan ya preparados en JSON. Sin cookies ni analítica, y con las fuentes servidas desde el propio sitio. GitHub Pages, que aloja la web, puede registrar qué ficheros se descargan.
 
 ## Datos
 
@@ -77,7 +68,6 @@ Hecho con [SvelteKit](https://svelte.dev/docs/kit) y `adapter-static`, sin plant
 Todo el texto de una historia está en un solo archivo, [`guiones/vivienda.md`](guiones/vivienda.md), con las instrucciones al principio. En resumen:
 
 - cada `## nombre` es un paso, y el nombre dice qué muestra el gráfico (`nube`, `linea`, `edad`…);
-- el texto es Markdown;
 - las cifras se escriben entre llaves: `{esp_media}` da «43,6 %», `{esp_media:0}` da «44 %» y `{esp_media:margen}` da «42,9–44,2 %»;
 - el apartado final `## rotulos` lleva los textos cortos de los gráficos (leyendas, notas, fuente).
 
