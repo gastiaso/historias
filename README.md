@@ -113,6 +113,7 @@ El workflow [`publicar.yml`](.github/workflows/publicar.yml) hace lo mismo en Gi
 ## Limitaciones
 
 - **El monográfico de vivienda es un avance.** Sus cifras salen de las tabulaciones publicadas el 8 de octubre de 2026, no de microdatos: los márgenes son aproximados, y los resultados definitivos pueden corregirlas ligeramente. La historia no cambia con ellos: forma parte de la edición `v2026-10`.
+- **El monográfico es un encargo compartido.** El *Barómetro de Vivienda 2026* se hizo por convenio entre el CIS y el Ministerio de Vivienda y Agenda Urbana ([BOE-A-2026-16808](https://boe.es/boe/dias/2026/08/01/pdfs/BOE-A-2026-16808.pdf)).
 - **Las dos encuestas no miden lo mismo.** Citar la vivienda sin que nadie la sugiera, como en los barómetros, no es lo mismo que responder cuando te preguntan por ella, como en el monográfico (al 87 % le preocupa mucho o bastante).
 - **La nube de entrevistas va sin ponderar.** Desde noviembre de 2023 exagera la vivienda: de media, unos 2 puntos como problema personal y 4 como problema de España. Por eso lleva el rótulo «sin ponderar».
 - **Algunas preguntas empujan.** La de la intervención del Estado la enfrenta a dejar el precio a «la ley de la oferta y la demanda», una formulación que puede inclinar hacia la primera opción. En baterías de medidas mucha gente tiende a decir que sí a todo, y por eso las medidas se ordenan por saldo (a favor menos en contra).
