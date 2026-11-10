@@ -52,7 +52,7 @@ La línea de puntos marca {r10_mes}: desde ese mes el CIS pondera también por n
 
 ## espana-personal
 
-La vivienda también se puede citar como problema personal. Hasta la primavera de 2024 se nombraba como problema propio tanto o más que como problema del país. Desde {cruce} es al revés, y la distancia crece: en el último año, {esp_media} frente a {per_media}.
+La vivienda también se puede citar como problema personal. Hasta la primavera de 2024 se nombraba casi siempre como problema propio tanto o más que como problema del país. Desde {cruce} es al revés, y la distancia crece: en el último año, {esp_media} frente a {per_media}.
 
 ## edad
 
@@ -80,7 +80,7 @@ Ese mes también hubo mucha noticia sobre vivienda, y no hay forma de separar cu
 
 ## junio
 
-Para ver qué hay detrás de esa línea, el CIS dedicó en junio una encuesta entera a la vivienda: {m_entrevistas} entrevistas, {m_campo}. Las cifras que siguen son del avance de resultados que publicó el {m_publicacion}; la versión definitiva puede corregirlas ligeramente.
+Para ver qué hay detrás de esa línea, el CIS dedicó en junio una encuesta entera a la vivienda, hecha junto al Ministerio de Vivienda y Agenda Urbana: {m_entrevistas} entrevistas, {m_campo}. Las cifras que siguen son del avance de resultados que publicó el {m_publicacion}; la versión definitiva puede corregirlas ligeramente.
 
 Allí se pregunta de otra manera. Preguntado directamente, al {m_preocupa:0} le preocupa mucho o bastante la situación de la vivienda en España. No contradice el {esp_media} de los barómetros: una cosa es nombrarla sin que nadie te la sugiera y otra responder cuando te preguntan por ella.
 
