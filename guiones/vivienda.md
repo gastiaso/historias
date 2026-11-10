@@ -46,10 +46,6 @@ En color, quienes citan la vivienda entre los problemas de España. En la primer
 
 En {inicio_mes} la citaba el {esp_inicio}. En el último año, de {media_desde} a {media_hasta}, la media ha sido del {esp_media}. Desde {primero_desde} es el primer problema de España en todos los barómetros: {primero_seguidos} seguidos.
 
-## linea
-
-La línea de puntos marca {r10_mes}: desde ese mes el CIS pondera también por nivel de estudios, y las cifras de un lado y otro no se comparan. Casi toda la subida ocurre después de esa línea.
-
 ## espana-personal
 
 La vivienda también se puede citar como problema personal. Hasta la primavera de 2024 se nombraba casi siempre como problema propio tanto o más que como problema del país. Desde {cruce} es al revés, y la distancia crece: en el último año, {esp_media} frente a {per_media}.
